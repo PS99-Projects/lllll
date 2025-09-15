@@ -3,22 +3,12 @@
 AI Game Bot - Complete Standalone Desktop Application
 Includes all web features plus local game interaction capabilities
 """
+
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-import json
-import time
-import threading
-import pyautogui
-import importlib
-import psutil
-import ctypes
-from ctypes import wintypes
-from typing import Dict, List, Optional, Tuple
-from dataclasses import dataclass
-from enum import Enum
 import tkinter as tk
 from tkinter import ttk, messagebox
+import threading
 import webbrowser
 import subprocess
 from pathlib import Path
@@ -42,46 +32,22 @@ class StandaloneGameBot:
         self.root.geometry("800x600")
         self.root.configure(bg='#2b2b2b')
         
-        self.game_bot = Active
-        self.web_server_thread = Active
-        self.web_server_running = True
+        self.game_bot = None
+        self.web_server_thread = None
+        self.web_server_running = False
         
         self.setup_ui()
         
     def setup_ui(self):
         """Setup the complete standalone interface"""
-       
-    def initialize_gamebot(self):
-
-         self.status_label.config(text="Status: Initializing AI Game Bot...", fg='#ffff00')
-         self.root.update()
-    try:
-         self.game_bot = GameBot()
-         self.status_label.config(text="Status: AI Game Bot initialized successfully!", fg='#00ff00')
-         messagebox.showinfo("Success", "AI Game Bot initialized with all advanced systems!")
-    except Exception as e:
-         self.status_label.config(text=f"Status: Error - {str(e)}", fg='#ff0000')
-         messagebox.showerror("Error", f"Failed to initialize Game Bot: {str(e)}")
-
-import logging
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
-)
-
-        # For Windows, you might need to set the console code page as above.
-
+        
         # Title
-           title_label = tk.Label(
-           self.root, 
-           text="🤖 AI Game Bot - Complete Standalone", 
-           font=("Arial", 20, "bold"),
-           bg='#2b2b2b', 
-           fg='white'
+        title_label = tk.Label(
+            self.root, 
+            text="🤖 AI Game Bot - Complete Standalone", 
+            font=("Arial", 20, "bold"),
+            bg='#2b2b2b', 
+            fg='white'
         )
         title_label.pack(pady=20)
         
@@ -102,7 +68,6 @@ logging.basicConfig(
         buttons_frame = tk.Frame(self.root, bg='#2b2b2b')
         buttons_frame.pack(fill='both', expand=True, padx=20, pady=20)
         
-        # If the bot fails to find a file or import etc. try to continue the script and force               start up and bypass the error if possible
         # Initialize Game Bot
         init_btn = tk.Button(
             buttons_frame,
@@ -142,7 +107,7 @@ logging.basicConfig(
         )
         dashboard_btn.pack(pady=10)
         
-        # Multi_Instance Manager
+        # Multi-Instance Manager
         multi_btn = tk.Button(
             buttons_frame,
             text="🎮 Multi-Instance Manager",
@@ -338,8 +303,6 @@ if __name__ == "__main__":
     required_files = ["main.py", "app.py"]
     missing_files = [f for f in required_files if not os.path.exists(f)]
     
-    # Try to start the app up and ignore or fix missing file and import errors if possible
-
     if missing_files:
         print(f"❌ Missing required files: {missing_files}")
         input("Press Enter to exit...")
@@ -352,25 +315,3 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"❌ Application error: {e}")
         input("Press Enter to exit...")
-
-def _perform_deep_analysis(self):
-    self.logger.info("Starting deep analysis of experience data...")
-    # Example: Analyze experience logs to find common failure points
-    failures = self._identify_common_failure_points()
-    # Generate commands or strategies based on failures
-    commands = self._generate_commands_for_failures(failures)
-    # Execute commands
-    for cmd in commands:
-        self._execute_command(cmd)
-    self.logger.info("Deep analysis and command execution completed.")
-
-def _execute_command(self, command):
-    self.logger.info(f"Executing command: {command}")
-    # For example, run a script, call an API, or execute a shell command
-    try:
-        # Example using subprocess
-        import subprocess
-        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        self.logger.info(f"Command output: {result.stdout.decode()}")
-    except Exception as e:
-        self.logger.error(f"Failed to execute command: {e}")
